@@ -16,6 +16,6 @@ Gem::Specification.new do |gem|
   gem.require_path  = 'lib'
 
   gem.add_dependency 'neo4j', ['> 3.0.0.alpha.8']
-  gem.add_dependency 'paperclip', ['~> 4.0']
+  gem.add_dependency 'paperclip', ['~> 5.0']
 
 end
