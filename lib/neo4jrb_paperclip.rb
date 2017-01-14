@@ -3,7 +3,7 @@
 begin
   require "paperclip"
 rescue LoadError
-  puts "Neo4jrb::Paperclip requires that you install the Paperclip gem."
+  puts "Neo4j::Paperclip requires that you install the Paperclip gem."
   exit
 end
 
@@ -20,14 +20,14 @@ end
 
 
 ##
-# The Neo4jrb::Paperclip extension
+# The Neo4j::Paperclip extension
 # Makes Paperclip play nice with the Neo4j Models
 #
 # Example:
 #
 #  class User
 #    include Neo4j::ActiveNode
-#    include Neo4jrb::Paperclip
+#    include Neo4j::Paperclip
 #
 #    has_neo4jrb_attached_file :avatar
 #    validates_attachment_content_type :avatar, content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"]
@@ -38,7 +38,7 @@ end
 # when using "vanilla Paperclip". The first parameter is a symbol [:field] and the second parameter is a hash of options [options = {}].
 # Note that the validation must come after the call to :has_neo4jrb_attached_file.
 #
-# Unlike Paperclip for ActiveRecord, since MongoDB does not use "schema" or "migrations", Neo4jrb::Paperclip automatically adds the neccesary "fields"
+# Unlike Paperclip for ActiveRecord, since MongoDB does not use "schema" or "migrations", Neo4j::Paperclip automatically adds the neccesary "fields"
 # to your Model (MongoDB collection) when you invoke the "#has_neo4jrb_attached_file" method. When you invoke "has_neo4jrb_attached_file :avatar" it will
 # automatially add the following fields:
 #
@@ -47,7 +47,7 @@ end
 #  field :avatar_file_size,    :type => Fixnum
 #  field :avatar_updated_at,   :type => DateTime
 #
-module Neo4jrb 
+module Neo4j 
   module Paperclip
     extend ActiveSupport::Concern
     include ::Paperclip::Validators
@@ -75,11 +75,11 @@ module Neo4jrb
       end
 
       ##
-      # Adds Neo4jrb::Paperclip's "#has_neo4jrb_attached_file" class method to the model
+      # Adds Neo4j::Paperclip's "#has_neo4jrb_attached_file" class method to the model
       # which includes Paperclip and Paperclip::Glue in to the model. Additionally
       # it'll also add the required fields for Paperclip since MongoDB is schemaless and doesn't
       # have migrations.
-      def has_neo4jrb_attached_file(field, options = {})
+      def has_neo4j_attached_file(field, options = {})
 
         ##
         # Include Paperclip and Paperclip::Glue for compatibility
@@ -88,7 +88,7 @@ module Neo4jrb
 
         ##
         # Invoke Paperclip's #has_attached_file method and passes in the
-        # arguments specified by the user that invoked Neo4jrb::Paperclip#has_neo4jrb_attached_file
+        # arguments specified by the user that invoked Neo4j::Paperclip#has_neo4jrb_attached_file
         has_attached_file(field, options)
 
         ##
@@ -102,8 +102,8 @@ module Neo4jrb
       ##
       # This method is deprecated
       def has_attached_file(field, options = {})
-        raise "Neo4jrb::Paperclip#has_attached_file is deprecated, " +
-          "Use 'has_neo4jrb_attached_file' instead"
+        raise "Neo4j::Paperclip#has_attached_file is deprecated, " +
+          "Use 'has_neo4j_attached_file' instead"
       end
     end
   end
